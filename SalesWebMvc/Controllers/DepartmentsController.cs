@@ -46,27 +46,26 @@ namespace SalesWebMvc.Controllers
         //    return View(department);
         //}
 
-        //// GET: Departments/Create
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+        // GET: Departments/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-        //// POST: Departments/Create
-        //// To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        //// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Id,Name")] Department department)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(department);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(department);
-        //}
+        // POST: Departments/Create
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Name")] Department department)
+        {
+            if (ModelState.IsValid)
+            {
+                  _departmentService.Insert(department);
+                
+                return  RedirectToAction(nameof(Index));
+            }
+            return  View(department);
+        }
 
         //// GET: Departments/Edit/5
         //public async Task<IActionResult> Edit(int? id)

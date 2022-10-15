@@ -21,5 +21,11 @@ namespace SalesWebMvc.Services
         {
             return await _context.Department.ToListAsync();
         }
+
+        public async void Insert(Department department)
+        {
+             await _context.AddAsync(department);
+            _context.SaveChanges();
+        }
     }
 }
