@@ -21,12 +21,12 @@ namespace SalesWebMvc.Services
             return await _context.Seller.ToListAsync();
         }
 
-        public void InsertSeller(Seller seller)
+        public async Task<Seller> InsertSeller(Seller seller)
         {
-               _context.Add(seller);
-                _context.SaveChanges();
-            
-            
+             
+            await _context.AddAsync(seller);
+            await _context.SaveChangesAsync();
+            return seller;
         }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SalesWebMvc.Data;
 using SalesWebMvc.Models;
+using SalesWebMvc.Models.ViewModels;
 using SalesWebMvc.Services;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,12 @@ namespace SalesWebMvc.Controllers
     public class SellersController : Controller
     {
         private readonly SellerService _sellerService;
+        private readonly DepartmentService _departmentService;
 
-        public SellersController(SellerService sellerService)
+        public SellersController(SellerService sellerService, DepartmentService departmentService)
         {
             _sellerService = sellerService;
+            _departmentService = departmentService;
         }
 
         public async Task<IActionResult> Index()
@@ -27,17 +30,19 @@ namespace SalesWebMvc.Controllers
         }
 
         //CreateGet//
-        public  IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var department = await _departmentService.FindAllDep();
+            var ViewModel = new SellerFormViewModel { Departments = department };
+            return View(ViewModel);
         }
 
         //CreatePost//
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id,Name, Email,BirthDate,Salary, Seller ")] Seller seller)
+        public async Task<IActionResult> Create([Bind("Id,Name, Email,BirthDate,Salary, Seller, DepartmentId")] Seller seller)
         {
-             _sellerService.InsertSeller(seller);
+              await  _sellerService.InsertSeller(seller);
             return  RedirectToAction(nameof(Index));
 
         }

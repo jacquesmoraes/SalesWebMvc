@@ -19,13 +19,15 @@ namespace SalesWebMvc.Services
 
         public async Task<List<Department>> FindAllDep()
         {
-            return await _context.Department.ToListAsync();
+            return await _context.Department.OrderBy(x => x.Name).ToListAsync();
         }
 
-        public async void Insert(Department department)
+        public async Task<Department> Insert(Department department)
         {
              await _context.AddAsync(department);
-            _context.SaveChanges();
+              _context.SaveChanges();
+            return department;
         }
+        
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SalesWebMvc.Models
 {
@@ -11,8 +13,12 @@ namespace SalesWebMvc.Models
         public string Email { get; set; }
         public DateTime BirthDate { get; set; }
         public double Salary { get; set; }
-        public Department Department { get; set; }
+        [ForeignKey("Department")]
+        public int DepartmentId { get; set; }
+        public virtual  Department Department { get; set; }
         public ICollection<SalesRecord> Sales { get; set; } = new List<SalesRecord>();
+       
+        
 
         public Seller()
         {

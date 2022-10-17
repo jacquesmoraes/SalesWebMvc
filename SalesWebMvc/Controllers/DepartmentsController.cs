@@ -60,7 +60,7 @@ namespace SalesWebMvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                  _departmentService.Insert(department);
+                 await  _departmentService.Insert(department);
                 
                 return  RedirectToAction(nameof(Index));
             }
