@@ -21,12 +21,24 @@ namespace SalesWebMvc.Services
         {
             return await _context.Department.OrderBy(x => x.Name).ToListAsync();
         }
+        public async Task<Department> FindByIdDep(int? id)
+        {
+            return await _context.Department.FirstOrDefaultAsync(x => x.Id == id);
+        }
 
         public async Task<Department> Insert(Department department)
         {
              await _context.AddAsync(department);
               _context.SaveChanges();
             return department;
+        }
+
+        public void  Delete(int id)
+        {
+            var obj =  _context.Department.Find(id);
+            _context.Remove(obj);
+            _context.SaveChanges();
+
         }
         
     }

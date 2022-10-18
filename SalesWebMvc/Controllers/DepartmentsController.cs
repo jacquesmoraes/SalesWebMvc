@@ -14,10 +14,12 @@ namespace SalesWebMvc.Controllers
     public class DepartmentsController : Controller
     {
         private readonly DepartmentService _departmentService;
+        
 
         public DepartmentsController(DepartmentService departmentService)
         {
             _departmentService = departmentService;
+            
         }
 
 
@@ -66,6 +68,36 @@ namespace SalesWebMvc.Controllers
             }
             return  View(department);
         }
+
+        //Delete department GET
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var department = await _departmentService.FindByIdDep(id.Value);
+            if (department == null)
+            {
+                return NotFound();
+            }
+
+            return View(department);
+        }
+
+
+        //Delete Post
+        [HttpPost , ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+             _departmentService.Delete(id);
+            return RedirectToAction(nameof(Index));
+
+        }
+
+
+
 
         //// GET: Departments/Edit/5
         //public async Task<IActionResult> Edit(int? id)
@@ -118,25 +150,8 @@ namespace SalesWebMvc.Controllers
         //    return View(department);
         //}
 
-        //// GET: Departments/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
 
-        //    var department = await _context.Department
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (department == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(department);
-        //}
-
-        //// POST: Departments/Delete/5
+        //POST: Departments/Delete/5
         //[HttpPost, ActionName("Delete")]
         //[ValidateAntiForgeryToken]
         //public async Task<IActionResult> DeleteConfirmed(int id)
