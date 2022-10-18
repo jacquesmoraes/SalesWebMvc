@@ -151,16 +151,7 @@ namespace SalesWebMvc.Controllers
         //}
 
 
-        //POST: Departments/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    var department = await _context.Department.FindAsync(id);
-        //    _context.Department.Remove(department);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
+       
 
         //private bool DepartmentExists(int id)
         //{
