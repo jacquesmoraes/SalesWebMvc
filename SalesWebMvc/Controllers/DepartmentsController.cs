@@ -30,24 +30,23 @@ namespace SalesWebMvc.Controllers
             return View(list);
         }
 
-        //// GET: Departments/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public async Task<IActionResult> Details(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+            var obj = await _departmentService.FindByIdDep(id);
+            if(obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);   
+        }
 
-        //    var department = await _context.Department
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (department == null)
-        //    {
-        //        return NotFound();
-        //    }
 
-        //    return View(department);
-        //}
 
+       
         // GET: Departments/Create
         public IActionResult Create()
         {
