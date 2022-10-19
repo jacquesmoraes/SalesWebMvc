@@ -11,16 +11,20 @@ namespace SalesWebMvc.Models
         public int Id { get; set; }
 
         [Display(Name = "Nome")]
+        [Required(ErrorMessage ="{0} obrigatório")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage ="{0} precisa ter mais de {2} caracteres e menos de {1}")]
         public string Name { get; set; }
 
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
+        [Required(ErrorMessage ="{0} obrigatória")]
         [Display(Name = "Data de nascimento")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime BirthDate { get; set; }
 
+        [Required(ErrorMessage ="Salário obrigatório")]
         [Display(Name="Salário")]
         [DisplayFormat(DataFormatString ="R$ {0:F2}")]
         public double Salary { get; set; }
