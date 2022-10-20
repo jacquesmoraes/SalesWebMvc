@@ -17,25 +17,25 @@ namespace SalesWebMvc.Services
             _context = context;
         }
 
-        public async Task<List<Department>> FindAllDep()
+        public async Task<List<Department>> FindAllDepAsync()
         {
             return await _context.Department.OrderBy(x => x.Name).ToListAsync();
         }
-        public async Task<Department> FindByIdDep(int? id)
+        public async Task<Department> FindByIdDepAsync(int? id)
         {
             return await _context.Department.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<Department> Insert(Department department)
+        public async Task<Department> InsertAsync(Department department)
         {
              await _context.AddAsync(department);
               _context.SaveChanges();
             return department;
         }
 
-        public void  Delete(int id)
+        public async Task  DeleteAsync(int id)
         {
-            var obj =  _context.Department.Find(id);
+            var obj = await _context.Department.FindAsync(id);
             _context.Remove(obj);
             _context.SaveChanges();
 

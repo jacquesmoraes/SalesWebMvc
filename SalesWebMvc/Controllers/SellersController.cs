@@ -27,14 +27,14 @@ namespace SalesWebMvc.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var list = await _sellerService.FindAll();
+            var list = await _sellerService.FindAllAsync();
             return View( list);
         }
 
         //CreateGet//
         public async Task<IActionResult> Create()
         {
-            var department = await _departmentService.FindAllDep();
+            var department = await _departmentService.FindAllDepAsync();
             var ViewModel = new SellerFormViewModel { Departments = department };
             return View(ViewModel);
         }
@@ -46,23 +46,23 @@ namespace SalesWebMvc.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var department = await _departmentService.FindAllDep();
+                var department = await _departmentService.FindAllDepAsync();
                 var viewModel = new SellerFormViewModel { Seller = seller, Departments = department };
                 return View(viewModel);
             }
-              await  _sellerService.InsertSeller(seller);
+              await  _sellerService.InsertSellerAsync(seller);
             return  RedirectToAction(nameof(Index));
 
         }
 
         //Delete Get//
-       public IActionResult Delete(int? id)
+       public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id Not Provided" });
             }
-            var obj = _sellerService.FindById(id.Value);
+            var obj =  await _sellerService.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id Not Found" });       
@@ -73,20 +73,20 @@ namespace SalesWebMvc.Controllers
          
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeletePost(int id)
+        public async Task<IActionResult> DeletePost(int id)
         {
-             _sellerService.Remove(id);
+            await _sellerService.RemoveAsync(id);
             return RedirectToAction(nameof(Index));
 
         }
 
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id Not Provided" });
             }
-            var obj = _sellerService.FindById(id.Value);
+            var obj = await _sellerService.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id Not Found" });
@@ -103,13 +103,13 @@ namespace SalesWebMvc.Controllers
                 return RedirectToAction(nameof(Error), new { message = "Id Not Provided" });
             }
 
-            var obj = _sellerService.FindById(id.Value);
+            var obj = await _sellerService.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id Not Found" });
             }
 
-            List<Department> departments = await _departmentService.FindAllDep();
+            List<Department> departments = await _departmentService.FindAllDepAsync();
             SellerFormViewModel viewModel = new SellerFormViewModel { Seller = obj, Departments = departments };    
             return View(viewModel); 
         }
@@ -121,7 +121,7 @@ namespace SalesWebMvc.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var department = await  _departmentService.FindAllDep();
+                var department = await  _departmentService.FindAllDepAsync();
                 var viewModel = new SellerFormViewModel { Seller = seller, Departments = department };
                 return View(viewModel);
             }
@@ -131,7 +131,7 @@ namespace SalesWebMvc.Controllers
             }
             try
             {
-                _sellerService.Update(seller);
+               await  _sellerService.UpdateAsync(seller);
                 return RedirectToAction(nameof(Index));
             }
 

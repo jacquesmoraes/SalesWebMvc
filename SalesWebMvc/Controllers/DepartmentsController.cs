@@ -26,7 +26,7 @@ namespace SalesWebMvc.Controllers
         // GET: Departments
         public async Task<IActionResult> Index()
         {
-            var list = await _departmentService.FindAllDep();
+            var list = await _departmentService.FindAllDepAsync();
             return View(list);
         }
 
@@ -36,7 +36,7 @@ namespace SalesWebMvc.Controllers
             {
                 return NotFound();
             }
-            var obj = await _departmentService.FindByIdDep(id);
+            var obj = await _departmentService.FindByIdDepAsync(id);
             if(obj == null)
             {
                 return NotFound();
@@ -61,7 +61,7 @@ namespace SalesWebMvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                 await  _departmentService.Insert(department);
+                 await  _departmentService.InsertAsync(department);
                 
                 return  RedirectToAction(nameof(Index));
             }
@@ -75,7 +75,7 @@ namespace SalesWebMvc.Controllers
             {
                 return NotFound();
             }
-            var department = await _departmentService.FindByIdDep(id.Value);
+            var department = await _departmentService.FindByIdDepAsync(id.Value);
             if (department == null)
             {
                 return NotFound();
@@ -88,9 +88,9 @@ namespace SalesWebMvc.Controllers
         //Delete Post
         [HttpPost , ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-             _departmentService.Delete(id);
+            await _departmentService.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
 
         }
