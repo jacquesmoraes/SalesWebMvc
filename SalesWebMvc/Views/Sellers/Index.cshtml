@@ -24,6 +24,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Salary)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Department.Name)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -42,6 +45,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Salary)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department.Name)
+                </td>
                 <td class="col-lg-4 text-right">
                     <a asp-action="Edit" class="btn btn-dark btn-sm" asp-route-id="@item.Id">Editar</a> |
                     <a asp-action="Details"class="btn btn-dark btn-sm" asp-route-id="@item.Id">Detalhes</a> |

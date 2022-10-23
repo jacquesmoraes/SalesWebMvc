@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SalesWebMvc.Data;
 using SalesWebMvc.Models;
+using SalesWebMvc.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace SalesWebMvc.Services
 {
@@ -21,7 +23,23 @@ namespace SalesWebMvc.Services
         {
             return await _context.SalesRecord.ToListAsync();
         }
+        public async Task<List<SalesRecord>> FindByDateAsync(DateTime? min, DateTime? max)
+        {
+            var result = from obj in  _context.SalesRecord select obj;
+            if (min.HasValue)
+            {
+                result = result.Where(x => x.Date >= min.Value);
+            }
+            if (max.HasValue)
+            {
+                result = result.Where(x => x.Date <= max.Value);
+            }
 
+            return await result.Include(x => x.Seller)
+                .Include(x => x.Seller.Department)
+                .Where(x => x.Status == SalesStatus.Billed)
+                .OrderByDescending(x => x.Date).ToListAsync();
+        }
 
     }
 }

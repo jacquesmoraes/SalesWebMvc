@@ -19,7 +19,7 @@ namespace SalesWebMvc.Services
 
         public async Task<List<Seller>> FindAllAsync()
         {
-            return await _context.Seller.ToListAsync();
+            return await _context.Seller.Include(x =>x.Department).ToListAsync();
         }
 
         public async Task<Seller> FindByIdAsync(int id)
@@ -27,12 +27,12 @@ namespace SalesWebMvc.Services
             return  await _context.Seller.Include(obj =>obj.Department).FirstOrDefaultAsync(obj => obj.Id == id);
         }
 
-        public async Task<Seller> InsertSellerAsync(Seller seller)
+        public async Task InsertSellerAsync(Seller seller)
         {
              
               _context.Add(seller);
-            await _context.SaveChangesAsync();
-            return seller;
+             await _context.SaveChangesAsync();
+            
         }
        
 

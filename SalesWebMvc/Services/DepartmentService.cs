@@ -30,7 +30,7 @@ namespace SalesWebMvc.Services
         {
              await _context.AddAsync(department);
               _context.SaveChanges();
-            return department;
+            return department; 
         }
 
         public async Task  DeleteAsync(int id)

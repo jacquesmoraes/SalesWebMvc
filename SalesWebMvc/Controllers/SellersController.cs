@@ -42,7 +42,7 @@ namespace SalesWebMvc.Controllers
         //CreatePost//
         [HttpPost, ActionName("Create")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreatePost([Bind("Id,Name, Email,BirthDate,Salary, Seller, DepartmentId")] Seller seller)
+        public async Task<IActionResult> CreatePost([Bind("Id,Name, Email,BirthDate,Salary, DepartmentId")] Seller seller)
         {
             if (!ModelState.IsValid)
             {
@@ -50,7 +50,7 @@ namespace SalesWebMvc.Controllers
                 var viewModel = new SellerFormViewModel { Seller = seller, Departments = department };
                 return View(viewModel);
             }
-              await  _sellerService.InsertSellerAsync(seller);
+            await  _sellerService.InsertSellerAsync(seller);
             return  RedirectToAction(nameof(Index));
 
         }
